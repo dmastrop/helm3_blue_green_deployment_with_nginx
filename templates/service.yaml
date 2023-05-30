@@ -13,3 +13,5 @@ spec:
       name: http
   selector:
     {{- include "advanced-deployments.selectorLabels" . | nindent 4 }}
+    {{ toYaml .Values.currentTarget | nindent 4 }}
+    #currentTarget needs to be added to values.yaml file. This is what will tell the setup which is current traffic target.

@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "advanced-deployments.fullname" . }}-blue
+  #name needs to be uniqe so -blue
   labels:
     {{- include "advanced-deployments.labels" . | nindent 4 }}
 spec:
@@ -12,6 +13,7 @@ spec:
     matchLabels:
       {{- include "advanced-deployments.selectorLabels" . | nindent 6 }}
       app: blue
+      #need to make this unique
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -21,6 +23,7 @@ spec:
       labels:
         {{- include "advanced-deployments.selectorLabels" . | nindent 8 }}
         app: blue
+        # add app blue here to make this unique from green
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -39,6 +42,7 @@ spec:
             - name: blue-vol
               mountPath: /usr/share/nginx/html/index.html
               subPath: index.html
+              # this is the volume for the ConfigMap blue. See bottom
           ports:
             - name: http
               containerPort: 80
@@ -69,3 +73,4 @@ spec:
         - name: blue-vol
           configMap:
             name: blue
+            # this maps the volume to the ConfigMap blue index.html
