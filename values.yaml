@@ -5,6 +5,7 @@
 replicaCount: 1
 currentTarget:
   app: blue
+  # default is blue initally
 
 image:
   repository: nginx
